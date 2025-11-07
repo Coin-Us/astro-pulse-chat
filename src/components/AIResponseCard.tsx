@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
+import PriceChart from "./PriceChart";
 import {
   TrendingUp,
   TrendingDown,
@@ -122,15 +123,9 @@ const AIResponseCard = ({ data }: AIResponseCardProps) => {
         </div>
       </div>
 
-      {/* Chart Placeholder */}
+      {/* Price Chart */}
       <div className="p-6 border-b border-border/50">
-        <div className="h-64 bg-muted/30 rounded-xl flex items-center justify-center border border-border/50">
-          <div className="text-center">
-            <div className="text-4xl mb-2">📈</div>
-            <p className="text-muted-foreground text-sm">Price Chart</p>
-            <p className="text-xs text-muted-foreground mt-1">Real-time data integration ready</p>
-          </div>
-        </div>
+        <PriceChart data={data} />
       </div>
 
       {/* Metrics Grid */}

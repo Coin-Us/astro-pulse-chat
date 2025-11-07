@@ -1,0 +1,2 @@
+/* Import OnchainKit styles separately to avoid Tailwind conflicts */
+@import '@coinbase/onchainkit/styles.css';

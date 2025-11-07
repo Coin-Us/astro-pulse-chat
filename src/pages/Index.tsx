@@ -3,6 +3,7 @@ import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
 import PromptChips from "@/components/PromptChips";
 import LiveCryptoTicker from "@/components/LiveCryptoTicker";
+import { WalletConnect } from "@/components/WalletConnect";
 import { Sparkles } from "lucide-react";
 import { sendChatMessage, streamOpenAIResponse, ChatMessage as OpenAIChatMessage } from "@/lib/openai";
 import { 
@@ -134,6 +135,7 @@ const Index = () => {
               CryptoSentiment AI
             </h1>
           </div>
+          <WalletConnect />
         </div>
       </header>
 

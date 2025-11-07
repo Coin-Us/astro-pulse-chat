@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
 import PromptChips from "@/components/PromptChips";
 import { Sparkles } from "lucide-react";
+import { sendChatMessage, streamOpenAIResponse, ChatMessage as OpenAIChatMessage } from "@/lib/openai";
+import { toast } from "sonner";
 
 export type Message = {
   id: string;
@@ -22,6 +24,7 @@ const Index = () => {
     },
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  const conversationHistory = useRef<OpenAIChatMessage[]>([]);
 
   const handleSendMessage = async (content: string) => {
     const userMessage: Message = {
@@ -34,47 +37,55 @@ const Index = () => {
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
 
-    // Simulate AI response with rich data
-    setTimeout(() => {
+    // Add user message to conversation history
+    conversationHistory.current.push({
+      role: "user",
+      content,
+    });
+
+    try {
+      // Create a placeholder for the AI response
+      const aiMessageId = (Date.now() + 1).toString();
       const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
+        id: aiMessageId,
         role: "assistant",
-        content: "Analysis complete",
+        content: "",
         timestamp: new Date(),
-        data: {
-          coin: {
-            name: "Bitcoin",
-            symbol: "BTC",
-            logo: "₿",
-            price: "$42,150",
-            change: "+3.2%",
-          },
-          signal: {
-            type: "STRONG BUY",
-            confidence: 87,
-            color: "success",
-          },
-          metrics: [
-            { label: "Sentiment Score", value: "78%", trend: "up", status: "Bullish" },
-            { label: "Galaxy Score", value: "85/100", trend: "up", status: "High" },
-            { label: "Fear & Greed", value: "72", trend: "neutral", status: "Greed" },
-            { label: "Social Volume", value: "+156%", trend: "up", status: "Trending" },
-            { label: "Price Target", value: "$45,000", trend: "up", status: "24h" },
-            { label: "Risk Level", value: "Medium", trend: "neutral", status: "Moderate" },
-          ],
-          analysis: {
-            sentiment: "Twitter shows 73% bullish mentions with significant whale activity detected.",
-            technical: "Breaking resistance at $42K with strong volume. Next target $45K.",
-            volume: "24h volume up 156%, indicating strong market interest and momentum.",
-            news: "Positive regulatory developments in the EU driving institutional adoption.",
-            recommendation: "Strong buy signal with stop loss at $39,500. Target profit at $45,000.",
-          },
-        },
       };
 
       setMessages((prev) => [...prev, aiMessage]);
+
+      // Get streaming response from OpenAI
+      const response = await sendChatMessage(content, conversationHistory.current);
+      let fullResponse = "";
+
+      // Stream the response
+      for await (const chunk of streamOpenAIResponse(response)) {
+        fullResponse += chunk;
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === aiMessageId
+              ? { ...msg, content: fullResponse }
+              : msg
+          )
+        );
+      }
+
+      // Add assistant response to conversation history
+      conversationHistory.current.push({
+        role: "assistant",
+        content: fullResponse,
+      });
+
       setIsLoading(false);
-    }, 2000);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast.error("Failed to send message. Please try again.");
+      setIsLoading(false);
+      
+      // Remove the AI placeholder message if there was an error
+      setMessages((prev) => prev.filter(msg => msg.role !== "assistant" || msg.content !== ""));
+    }
   };
 
   const handlePromptClick = (prompt: string) => {

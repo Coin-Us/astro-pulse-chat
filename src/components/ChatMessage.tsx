@@ -1,6 +1,7 @@
 import { Message } from "@/pages/Index";
 import { User, Bot } from "lucide-react";
 import AIResponseCard from "./AIResponseCard";
+import ReactMarkdown from "react-markdown";
 
 interface ChatMessageProps {
   message: Message;
@@ -53,7 +54,13 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
                 : "glass rounded-2xl border border-border"
             }`}
           >
-            <p className="text-sm">{message.content}</p>
+            {isUser ? (
+              <p className="text-sm">{message.content}</p>
+            ) : (
+              <div className="text-sm prose prose-invert prose-sm max-w-none">
+                <ReactMarkdown>{message.content || "..."}</ReactMarkdown>
+              </div>
+            )}
           </div>
 
           {/* Rich AI Response Card */}

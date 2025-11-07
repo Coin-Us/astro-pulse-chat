@@ -9,55 +9,55 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* Crypto Dark Theme - Base Colors */
-    --background: 229 24% 10%;  /* #0A0E27 deep navy */
-    --foreground: 210 40% 98%;  /* #F8FAFC white */
+    --background: 0 0% 0%;  /* #010103 almost black */
+    --foreground: 240 5% 90%;  /* #e5e3e7 light gray */
 
-    --card: 233 26% 12%;  /* #141829 dark card */
-    --card-foreground: 210 40% 98%;
+    --card: 240 4% 9%;  /* #151718 dark charcoal */
+    --card-foreground: 240 5% 90%;
 
-    --popover: 233 26% 12%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 240 4% 9%;
+    --popover-foreground: 240 5% 90%;
 
     /* Accent Colors - Indigo & Purple */
-    --primary: 239 84% 67%;  /* #6366F1 indigo */
-    --primary-foreground: 210 40% 98%;
+    --primary: 240 2% 64%;  /* #a3a2a6 medium gray */
+    --primary-foreground: 240 5% 90%;
 
-    --secondary: 258 90% 66%;  /* #8B5CF6 purple */
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 240 3% 33%;  /* #555557 medium-dark gray */
+    --secondary-foreground: 240 5% 90%;
 
-    --muted: 233 17% 22%;  /* #1A1F3A dark blue-purple */
-    --muted-foreground: 215 16% 59%;  /* #94A3B8 slate gray */
+    --muted: 240 4% 9%;  /* #151718 dark charcoal */
+    --muted-foreground: 240 2% 64%;  /* #a3a2a6 medium gray */
 
-    --accent: 239 84% 67%;  /* Indigo accent */
-    --accent-foreground: 210 40% 98%;
+    --accent: 240 2% 64%;  /* medium gray accent */
+    --accent-foreground: 240 5% 90%;
 
     /* Status Colors */
-    --success: 142 71% 45%;  /* #10B981 green */
-    --success-foreground: 210 40% 98%;
+    --success: 0 0% 60%;  /* #999999 light gray for success */
+    --success-foreground: 240 5% 90%;
 
-    --warning: 38 92% 50%;  /* #F59E0B amber */
-    --warning-foreground: 210 40% 98%;
+    --warning: 0 0% 50%;  /* #808080 medium gray for warning */
+    --warning-foreground: 240 5% 90%;
 
-    --destructive: 0 84% 60%;  /* #EF4444 red */
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 0% 30%;  /* #4d4d4d dark gray for errors */
+    --destructive-foreground: 240 5% 90%;
 
-    --border: 233 20% 18%;  /* Subtle border */
-    --input: 233 20% 18%;
-    --ring: 239 84% 67%;
+    --border: 240 3% 33%;  /* #555557 medium-dark gray */
+    --input: 240 3% 33%;
+    --ring: 240 2% 64%;
 
     --radius: 1rem;
 
     /* Gradients (used in components) */
-    --gradient-primary: linear-gradient(135deg, hsl(239 84% 67%), hsl(258 90% 66%));
-    --gradient-success: linear-gradient(135deg, hsl(142 71% 45%), hsl(142 71% 55%));
-    --gradient-danger: linear-gradient(135deg, hsl(0 84% 60%), hsl(0 84% 70%));
+    --gradient-primary: linear-gradient(135deg, hsl(240 2% 64%), hsl(240 3% 33%));
+    --gradient-success: linear-gradient(135deg, hsl(0 0% 60%), hsl(0 0% 50%));
+    --gradient-danger: linear-gradient(135deg, hsl(0 0% 30%), hsl(0 0% 20%));
     
     /* Glassmorphism */
-    --glass-bg: rgba(26, 31, 58, 0.8);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-bg: rgba(21, 23, 24, 0.8);
+    --glass-border: rgba(163, 162, 166, 0.1);
 
     /* Shadows & Glows */
-    --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.3);
+    --shadow-glow: 0 0 40px rgba(163, 162, 166, 0.3);
     --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
   }
 }
@@ -81,9 +81,9 @@ All colors MUST be HSL.
     width: 100%;
     height: 100%;
     background: 
-      radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
-      radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
+      radial-gradient(circle at 20% 30%, rgba(163, 162, 166, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(85, 85, 87, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(163, 162, 166, 0.03) 0%, transparent 50%);
     z-index: -1;
     animation: float 20s ease-in-out infinite;
   }
@@ -106,24 +106,24 @@ All colors MUST be HSL.
 
   /* Gradient backgrounds */
   .gradient-primary {
-    background: linear-gradient(135deg, hsl(239 84% 67%), hsl(258 90% 66%));
+    background: linear-gradient(135deg, hsl(240 2% 64%), hsl(240 3% 33%));
   }
 
   .gradient-success {
-    background: linear-gradient(135deg, hsl(142 71% 45%), hsl(142 71% 55%));
+    background: linear-gradient(135deg, hsl(0 0% 60%), hsl(0 0% 50%));
   }
 
   .gradient-danger {
-    background: linear-gradient(135deg, hsl(0 84% 60%), hsl(0 84% 70%));
+    background: linear-gradient(135deg, hsl(0 0% 30%), hsl(0 0% 20%));
   }
 
   /* Glow effects */
   .glow-primary {
-    box-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 0 40px rgba(163, 162, 166, 0.3);
   }
 
   .glow-success {
-    box-shadow: 0 0 40px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 0 40px rgba(153, 153, 153, 0.3);
   }
 
   /* Hover scale animation */

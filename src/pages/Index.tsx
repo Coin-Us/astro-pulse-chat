@@ -1,9 +1,17 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
 import PromptChips from "@/components/PromptChips";
+import LiveCryptoTicker from "@/components/LiveCryptoTicker";
 import { Sparkles } from "lucide-react";
 import { sendChatMessage, streamOpenAIResponse, ChatMessage as OpenAIChatMessage } from "@/lib/openai";
+import { 
+  createConversation, 
+  saveMessage, 
+  getMessages,
+  generateConversationTitle,
+  type Conversation 
+} from "@/lib/chat-storage";
 import { toast } from "sonner";
 
 export type Message = {
@@ -24,7 +32,9 @@ const Index = () => {
     },
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentConversation, setCurrentConversation] = useState<Conversation | null>(null);
   const conversationHistory = useRef<OpenAIChatMessage[]>([]);
+  const isFirstMessage = useRef(true);
 
   const handleSendMessage = async (content: string) => {
     const userMessage: Message = {
@@ -44,6 +54,20 @@ const Index = () => {
     });
 
     try {
+      // Create conversation on first message
+      if (!currentConversation && isFirstMessage.current) {
+        const title = generateConversationTitle(content);
+        const newConversation = await createConversation(title);
+        setCurrentConversation(newConversation);
+        isFirstMessage.current = false;
+        
+        // Save user message to database
+        await saveMessage(newConversation.id, "user", content);
+      } else if (currentConversation) {
+        // Save user message to existing conversation
+        await saveMessage(currentConversation.id, "user", content);
+      }
+
       // Create a placeholder for the AI response
       const aiMessageId = (Date.now() + 1).toString();
       const aiMessage: Message = {
@@ -76,6 +100,11 @@ const Index = () => {
         role: "assistant",
         content: fullResponse,
       });
+
+      // Save assistant message to database
+      if (currentConversation) {
+        await saveMessage(currentConversation.id, "assistant", fullResponse);
+      }
 
       setIsLoading(false);
     } catch (error) {
@@ -112,6 +141,9 @@ const Index = () => {
       <main className="flex-1 pt-24 pb-48 overflow-y-auto">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="space-y-6">
+            {/* Live Crypto Ticker */}
+            <LiveCryptoTicker />
+            
             {messages.map((message) => (
               <ChatMessage key={message.id} message={message} />
             ))}

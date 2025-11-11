@@ -170,7 +170,7 @@ const Index = () => {
 
       {/* Fixed Input Area at Bottom */}
       <div className="fixed bottom-0 left-0 right-0 z-40 pb-6">
-        <div className="container mx-auto px-4 max-w-4xl">
+        <div className="container mx-auto px-4 max-w-6xl">
           <div className="space-y-4">
             <PromptChips onPromptClick={handlePromptClick} />
             <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} />

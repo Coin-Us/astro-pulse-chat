@@ -2,6 +2,7 @@ import { Message } from "@/pages/Index";
 import { User, Bot } from "lucide-react";
 import AIResponseCard from "./AIResponseCard";
 import LiveCryptoChart from "./LiveCryptoChart";
+import { WhaleActivity } from "./WhaleActivity";
 import ReactMarkdown from "react-markdown";
 
 interface ChatMessageProps {
@@ -71,7 +72,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
         }
       `}</style>
 
-      <div className={`flex gap-3 max-w-3xl w-full ${isUser ? "flex-row-reverse" : "flex-row"}`}>
+      <div className={`flex gap-3 max-w-5xl w-full ${isUser ? "flex-row-reverse" : "flex-row"}`}>
         {/* Avatar */}
         <div
           className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -105,11 +106,12 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
 
           {/* Live Chart - Show when coin is detected in AI response */}
           {!isUser && detectedCoin && message.content && (
-            <div className="mt-2">
+            <div className="mt-2 space-y-4">
               <LiveCryptoChart 
                 coinId={detectedCoin.coinId} 
                 coinName={detectedCoin.coinName}
               />
+              <WhaleActivity coinSymbol={detectedCoin.coinId === 'bitcoin' ? 'BTC' : detectedCoin.coinId === 'ethereum' ? 'ETH' : detectedCoin.coinId.toUpperCase()} />
             </div>
           )}
 

@@ -9,10 +9,6 @@ const prompts = [
   { emoji: "🎯", text: "Give me trading signals for ETH" },
   { emoji: "🔥", text: "What's trending in crypto today?" },
   { emoji: "💎", text: "Find me hidden gems under $1" },
-  { emoji: "⚠️", text: "Show me high-risk opportunities" },
-  { emoji: "🌊", text: "What's the market fear & greed level?" },
-  { emoji: "🚀", text: "Which altcoins are pumping?" },
-  { emoji: "📈", text: "Compare BTC vs ETH sentiment" },
 ];
 
 const PromptChips = ({ onPromptClick }: PromptChipsProps) => {
